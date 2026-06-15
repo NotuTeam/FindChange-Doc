@@ -1,0 +1,4 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export default function HowItWorksStep({ stepNumber, icon: Icon, title, description, isLast, }) {
+    return (_jsxs("div", { className: "flex gap-4 relative", children: [!isLast && (_jsx("div", { className: "absolute left-[18px] top-10 bottom-0 w-px bg-border" })), _jsx("div", { className: "shrink-0 w-9 h-9 rounded-full border-2 border-accent bg-accent/10 flex items-center justify-center relative z-10", children: _jsx(Icon, { className: "text-accent", size: 16 }) }), _jsxs("div", { className: "pb-8", children: [_jsx("div", { className: "flex items-center gap-2 mb-1", children: _jsxs("span", { className: "text-xs font-mono text-zinc-500", children: ["Step ", stepNumber] }) }), _jsx("h3", { className: "font-semibold text-white mb-1", children: title }), _jsx("p", { className: "text-sm text-zinc-400 leading-relaxed", children: description })] })] }));
+}

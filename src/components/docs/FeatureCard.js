@@ -1,0 +1,4 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export default function FeatureCard({ icon: Icon, title, description, badge }) {
+    return (_jsxs("div", { className: "group relative rounded-card border border-border bg-bg-surface p-5 transition-colors hover:border-accent/40", children: [badge && (_jsx("span", { className: "absolute top-3 right-3 text-[10px] uppercase text-accent bg-accent/10 px-1.5 py-0.5 rounded-badge", children: badge })), _jsx("div", { className: "w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mb-3", children: _jsx(Icon, { className: "text-accent", size: 20 }) }), _jsx("h3", { className: "font-semibold text-white mb-1", children: title }), _jsx("p", { className: "text-sm text-zinc-400 leading-relaxed", children: description })] }));
+}
