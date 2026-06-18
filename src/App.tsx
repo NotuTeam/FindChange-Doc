@@ -6,6 +6,8 @@ import Installation from './pages/Installation';
 import QuickStart from './pages/QuickStart';
 import UseDebugState from './pages/api/UseDebugState';
 import DebugWatcherPage from './pages/api/DebugWatcher';
+import ConsoleCapture from './pages/api/ConsoleCapture';
+import ServerLogs from './pages/api/ServerLogs';
 import WindowControls from './pages/api/WindowControls';
 import DebugStore from './pages/api/DebugStore';
 import HowItWorks from './pages/HowItWorks';
@@ -24,6 +26,8 @@ export default function App() {
         <Route path="/getting-started/quick-start" element={<QuickStart />} />
         <Route path="/api/use-debug-state" element={<UseDebugState />} />
         <Route path="/api/debug-watcher" element={<DebugWatcherPage />} />
+        <Route path="/api/console-capture" element={<ConsoleCapture />} />
+        <Route path="/api/server-logs" element={<ServerLogs />} />
         <Route path="/api/window-controls" element={<WindowControls />} />
         <Route path="/api/debug-store" element={<DebugStore />} />
         <Route path="/how-it-works" element={<HowItWorks />} />

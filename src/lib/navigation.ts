@@ -42,6 +42,8 @@ export const navSections: NavSection[] = [
     items: [
       { label: 'useDebugState()', href: '/api/use-debug-state', badge: 'Core' },
       { label: '<DebugWatcher />', href: '/api/debug-watcher', badge: 'Core' },
+      { label: 'setupConsoleCapture()', href: '/api/console-capture', badge: 'New' },
+      { label: 'Server Logs (SSR)', href: '/api/server-logs', badge: 'New' },
       { label: 'Window Controls', href: '/api/window-controls' },
       { label: 'debugStore', href: '/api/debug-store' },
     ],

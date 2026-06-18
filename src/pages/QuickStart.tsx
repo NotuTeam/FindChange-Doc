@@ -6,7 +6,7 @@ export default function QuickStart() {
     <div className="docs-prose">
       <p className="text-sm text-zinc-500">Getting Started</p>
       <h1>Quick Start</h1>
-      <p>Get up and running with findchange in 3 steps.</p>
+      <p>Get up and running with findchange in 4 steps.</p>
 
       <h2 id="step-1">Step 1: Place the DebugWatcher component</h2>
       <p>
@@ -30,7 +30,27 @@ function App() {
         This renders a floating Debug button in the bottom-right corner (development only).
       </p>
 
-      <h2 id="step-2">Step 2: Watch your states</h2>
+      <h2 id="step-2">Step 2: (Optional) Override console</h2>
+      <p>
+        Call <code>setupConsoleCapture()</code> once at your app entry to capture all{' '}
+        <code>console.*</code> calls:
+      </p>
+      <CodeBlock
+        code={`import { setupConsoleCapture } from 'findchange';
+
+// Call once at app entry (e.g. main.tsx)
+// Dev: logs captured + passed through to real console
+// Prod: console.* becomes silent no-op (no leaking)
+setupConsoleCapture();`}
+        filename="main.tsx"
+        highlightLines={[6]}
+      />
+      <p className="text-sm">
+        This enables the <strong>Console</strong> tab in the debug window. If you skip this step,
+        the popup will only show the Watcher tab.
+      </p>
+
+      <h2 id="step-3">Step 3: Watch your states</h2>
       <p>
         Use the <code>useDebugState</code> hook to track any state value. It works just like a
         transparent passthrough:
@@ -59,16 +79,20 @@ function CheckoutForm() {
         state or trigger re-renders.
       </p>
 
-      <h2 id="step-3">Step 3: Click the Debug button</h2>
+      <h2 id="step-4">Step 4: Click the Debug button</h2>
       <p>
-        Click the floating Debug button to open a separate popup window showing all watched states
-        as collapsible JSON blocks.
+        Click the floating Debug button to open a separate popup window. It automatically shows
+        tabs for the features you enabled:
       </p>
+      <ul>
+        <li><strong>Watcher tab</strong> - shows all watched states as collapsible JSON</li>
+        <li><strong>Console tab</strong> - shows captured logs with level badges, timestamps, and file locations</li>
+      </ul>
       <div className="flex items-start gap-3 p-4 rounded-card border border-accent/30 bg-accent/5 my-4">
         <Lightbulb size={18} className="text-accent shrink-0 mt-0.5" />
         <p className="!mb-0 text-sm">
-          <strong>Tip:</strong> The popup stays in sync as your states change. Keep it open on a
-          second monitor while you develop for continuous state tracing.
+          <strong>Tip:</strong> The popup stays in sync as your states change and as new console
+          calls are made. Keep it open on a second monitor for continuous tracing.
         </p>
       </div>
     </div>

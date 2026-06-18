@@ -14,6 +14,8 @@ import {
   MonitorCheck,
   Pin,
   Code2,
+  TerminalSquare,
+  Layers,
 } from "lucide-react";
 import FeatureCard from "../components/docs/FeatureCard";
 import CodeBlock from "../components/docs/CodeBlock";
@@ -30,13 +32,13 @@ export default function Home() {
           <span>Dev-only tool for React developers</span>
         </div>
         <h1 className="!text-4xl md:!text-5xl font-bold mb-4 !text-white">
-          Stop sprinkling <code className="text-accent">console.log</code>{" "}
-          everywhere
+          Watch state &amp; capture{" "}
+          <code className="text-accent">console</code> in one debug window
         </h1>
         <p className="text-lg text-zinc-400 max-w-2xl mx-auto mb-8">
-          Watch any React state in a dedicated popup window that updates in
-          real-time. Trace state changes continuously without polluting your
-          console.
+          Trace state changes and capture all <code>console.*</code> output in a
+          dedicated popup window with timestamps and file locations. Safe for
+          production - logs are suppressed, states are no-ops.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
           <Link
@@ -62,59 +64,57 @@ export default function Home() {
             <PackageX size={12} /> Zero bundle impact in production
           </span>
           <span className="flex items-center gap-1">
-            <ShieldCheck size={12} /> Framework-agnostic core
+            <ShieldCheck size={12} /> SSR-safe
+          </span>
+          <span className="flex items-center gap-1">
+            <TerminalSquare size={12} /> Console suppression in prod
           </span>
         </div>
       </section>
 
       {/* Visual Mockup */}
       <section className="mb-16">
-        <div className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
-          {/* Browser window mockup */}
-          <div className="rounded-card border border-border bg-bg-surface overflow-hidden">
-            <div className="flex items-center gap-1.5 px-3 py-2 border-b border-border">
+        <div className="rounded-card border border-accent/30 bg-bg-surface overflow-hidden shadow-lg shadow-accent/5 max-w-2xl mx-auto">
+          {/* Tab bar mockup */}
+          <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-bg-elevated">
+            <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
               <div className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
               <div className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
             </div>
-            <div className="p-4 h-48 flex items-end justify-end relative">
-              <div className="text-xs text-zinc-600 absolute top-4 left-4">
-                Your App
-              </div>
-              <div className="flex items-center gap-1.5 bg-accent/90 text-black text-xs font-medium px-3 py-1.5 rounded-card shadow-lg">
-                <Bug size={12} />
-                Debug
-              </div>
+            <span className="text-[10px] text-green-500 bg-green-950/50 px-1.5 py-0.5 rounded">
+              Connected
+            </span>
+          </div>
+          <div className="flex border-b border-border">
+            <div className="px-3 py-2 text-xs font-medium text-white border-b-2 border-accent flex items-center gap-1">
+              Watcher <span className="text-[10px] bg-zinc-700 px-1 py-0.5 rounded">3</span>
+            </div>
+            <div className="px-3 py-2 text-xs font-medium text-zinc-500 flex items-center gap-1">
+              Console <span className="text-[10px] bg-accent/20 text-accent px-1 py-0.5 rounded">5</span>
             </div>
           </div>
-          {/* Popup window mockup */}
-          <div className="rounded-card border border-accent/30 bg-bg-surface overflow-hidden shadow-lg shadow-accent/5">
-            <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-bg-elevated">
-              <span className="text-xs font-medium text-zinc-300">
-                Debug Watcher
-              </span>
-              <span className="text-[10px] text-green-500 bg-green-950/50 px-1.5 py-0.5 rounded">
-                Connected
-              </span>
-            </div>
-            <div className="p-3 space-y-2">
-              <div className="rounded-md border border-accent/40 bg-accent/5 p-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-accent font-medium">
-                    {"{chevron}"} checkoutForm
-                  </span>
-                  <span className="text-zinc-600">object</span>
-                </div>
-                <pre className="text-[10px] text-amber-300/80 mt-1 font-mono">{`{ "name": "Alice",
-  "step": 2 }`}</pre>
+          {/* Console content mockup */}
+          <div className="p-3 space-y-1 font-mono text-xs">
+            <div className="flex gap-2 py-1">
+              <span className="bg-zinc-700 text-zinc-300 px-1.5 py-0.5 rounded text-[10px] font-bold min-w-[40px] text-center">LOG</span>
+              <div className="flex-1">
+                <div className="text-zinc-300">[form] update email -&gt; alice@test.com</div>
+                <div className="text-[10px] text-zinc-600">14:23:01.234 /src/App.tsx:42</div>
               </div>
-              <div className="rounded-md border border-border bg-bg p-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-zinc-300 font-medium">
-                    {"{chevron}"} currentStep
-                  </span>
-                  <span className="text-zinc-600">number</span>
-                </div>
+            </div>
+            <div className="flex gap-2 py-1">
+              <span className="bg-yellow-900 text-yellow-300 px-1.5 py-0.5 rounded text-[10px] font-bold min-w-[40px] text-center">WARN</span>
+              <div className="flex-1">
+                <div className="text-zinc-300">Validation failed on step 0</div>
+                <div className="text-[10px] text-zinc-600">14:23:02.891 /src/App.tsx:67</div>
+              </div>
+            </div>
+            <div className="flex gap-2 py-1">
+              <span className="bg-red-900 text-red-300 px-1.5 py-0.5 rounded text-[10px] font-bold min-w-[40px] text-center">ERROR</span>
+              <div className="flex-1">
+                <div className="text-zinc-300">API request failed: timeout</div>
+                <div className="text-[10px] text-zinc-600">14:23:03.102 /src/api.ts:15</div>
               </div>
             </div>
           </div>
@@ -127,13 +127,25 @@ export default function Home() {
           Features
         </h2>
         <p className="!text-center text-zinc-500 mb-8">
-          Everything you need for painless state debugging
+          Everything you need for painless state debugging and log capture
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 not-prose">
           <FeatureCard
             icon={AppWindow}
             title="Separate Debug Window"
             description="A popup window, not a tab, that stays open while you code."
+          />
+          <FeatureCard
+            icon={TerminalSquare}
+            title="Console Capture"
+            description="Override all console.* methods. Logs appear in the Console tab with timestamps and file locations."
+            badge="New"
+          />
+          <FeatureCard
+            icon={Layers}
+            title="Tabbed Popup"
+            description="Automatically shows Watcher and Console tabs based on which features you enable."
+            badge="New"
           />
           <FeatureCard
             icon={Zap}
@@ -152,13 +164,14 @@ export default function Home() {
           />
           <FeatureCard
             icon={ShieldCheck}
-            title="Safe Serialization"
-            description="Handles circular references and functions safely via JSON serialization."
+            title="SSR-safe"
+            description="Works on both client and server without crashing. Server logs hydrate into the popup."
+            badge="New"
           />
           <FeatureCard
             icon={PackageX}
             title="Zero Production Impact"
-            description="Completely no-op in production builds. Zero bundle impact."
+            description="No-op in production. Console suppressed, states passthrough. Zero bundle impact."
           />
         </div>
       </section>
@@ -221,6 +234,26 @@ function App() {
               <span className="w-6 h-6 rounded-full bg-accent text-black flex items-center justify-center text-xs font-bold">
                 2
               </span>
+              <h3 className="!my-0 !text-white">
+                (Optional) Override console
+              </h3>
+            </div>
+            <CodeBlock
+              code={`import { setupConsoleCapture } from 'findchange';
+
+// Call once at app entry - captures all console.*
+// Dev: logs appear in Console tab + real console
+// Prod: console.* becomes silent no-op
+setupConsoleCapture();`}
+              filename="main.tsx"
+              highlightLines={[6]}
+            />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-6 h-6 rounded-full bg-accent text-black flex items-center justify-center text-xs font-bold">
+                3
+              </span>
               <h3 className="!my-0 !text-white">Watch your states</h3>
             </div>
             <CodeBlock
@@ -240,14 +273,14 @@ function CheckoutForm() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="w-6 h-6 rounded-full bg-accent text-black flex items-center justify-center text-xs font-bold">
-                3
+                4
               </span>
               <h3 className="!my-0 !text-white">Click the Debug button</h3>
             </div>
             <p>
-              Click the floating Debug button to open a separate window showing
-              all watched states as collapsible JSON. The window stays in sync
-              as your states change.
+              Click the floating Debug button to open a separate window. It
+              automatically shows tabs for the features you enabled: Watcher for
+              states, Console for captured logs.
             </p>
           </div>
         </div>
@@ -260,32 +293,26 @@ function CheckoutForm() {
           <HowItWorksStep
             stepNumber={1}
             icon={Database}
-            title="useDebugState registers value"
-            description="Your state value is registered in a central DebugStore."
+            title="Register &amp; capture"
+            description="useDebugState registers state values, setupConsoleCapture overrides all console.* methods."
           />
           <HowItWorksStep
             stepNumber={2}
             icon={Radio}
-            title="Store broadcasts snapshot"
-            description="The store broadcasts via window.postMessage and BroadcastChannel."
+            title="Store broadcasts"
+            description="The store broadcasts snapshots and log entries via window.postMessage and BroadcastChannel."
           />
           <HowItWorksStep
             stepNumber={3}
             icon={MonitorCheck}
-            title="Debug window renders JSON"
-            description="The popup window renders states as collapsible JSON blocks."
+            title="Popup renders with tabs"
+            description="The popup automatically shows Watcher and Console tabs based on which features you enabled."
           />
           <HowItWorksStep
             stepNumber={4}
             icon={ArrowUpFromLine}
-            title="Changed states float to top"
-            description="Recently changed states are sorted to the top for visibility."
-          />
-          <HowItWorksStep
-            stepNumber={5}
-            icon={Pin}
-            title="Fold state persists"
-            description="Your fold/unfold preferences are preserved across refreshes."
+            title="Smart organization"
+            description="Changed states float to top. Logs show level badges, timestamps, and file locations."
             isLast
           />
         </div>
